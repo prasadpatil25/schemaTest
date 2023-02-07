@@ -1,1 +1,2008 @@
-{"$id":"tosca_simple_yaml_1_3","title":"OASIS TOSCA Simple Profile in YAML Version 1.3 JSON Schema","description":"JSON Schema for OASIS TOSCA Simple Profile in YAML Version 1.3","$ref":"#/definitions/service_template_definition","definitions":{"value":{},"version":{"anyOf":[{"type":"string"},{"type":"number"}]},"range":{"type":"array","items":[{"type":"integer","minimum":0},{"oneOf":[{"type":"integer","minimum":0},{"enum":["UNBOUNDED"]}]}],"minItems":2,"maxItems":2},"scalar_unit":{"type":"string","pattern":"^[0-9]+( )*[A-Za-z]+$"},"directives":{"type":"array","items":{"type":"string","enum":["substitute","substitutable","select","selectable"]},"maxItems":2},"description":{"type":"string"},"metadata":{"type":"object","additionalProperties":{"anyOf":[{"type":"string"},{"type":"number"}]}},"constraint_clause":{"oneOf":[{"$ref":"#/definitions/scalar"},{"$ref":"#/definitions/constraint_clause_with_operator"}]},"constraint_clause_with_operator":{"type":"object","properties":{"equal":{"$ref":"#/definitions/value"},"greater_than":{"$ref":"#/definitions/value"},"greater_or_equal":{"$ref":"#/definitions/value"},"less_than":{"$ref":"#/definitions/value"},"less_or_equal":{"$ref":"#/definitions/value"},"in_range":{"type":"array","items":[{"$ref":"#/definitions/value"},{"$ref":"#/definitions/value"}],"maxItems":2},"valid_values":{"type":"array","items":{"$ref":"#/definitions/value"}},"length":{"type":"integer","minimum":0},"min_length":{"type":"integer","minimum":0},"max_length":{"type":"integer","minimum":0},"pattern":{"type":"string"},"schema":{"type":"string"}},"additionalProperties":false,"minProperties":1,"maxProperties":1},"scalar":{"anyOf":[{"type":"boolean"},{"type":"string"},{"type":"number"}]},"property_filter_definition":{"type":"object","additionalProperties":{"oneOf":[{"$ref":"#/definitions/constraint_clause"},{"type":"array","items":{"$ref":"#/definitions/constraint_clause"}}]},"minProperties":1,"maxProperties":1},"node_filter_definition":{"type":"object","properties":{"properties":{"type":"array","items":{"$ref":"#/definitions/property_filter_definition"}},"capabilities":{"type":"array","items":{"type":"object","additionalProperties":{"type":"object","properties":{"properties":{"type":"array","items":{"$ref":"#/definitions/property_filter_definition"}}},"additionalProperties":false}}}},"additionalProperties":false},"repository_definition":{"anyOf":[{"type":"string"},{"type":"object","properties":{"description":{"$ref":"#/definitions/description"},"url":{"type":"string"},"credential":{"type":"object"}},"required":["url"],"additionalProperties":false}]},"artifact_definition":{"anyOf":[{"type":"string"},{"type":"object","properties":{"type":{"type":"string"},"file":{"type":"string"},"repository":{"type":"string"},"description":{"$ref":"#/definitions/description"},"deploy_path":{"type":"string"},"artifact_version":{"type":"string"},"checksum":{"type":"string"},"checksum_algorithm":{"type":"string"},"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_assignment"}}},"additionalProperties":false,"required":["type","file"]}]},"import_definition":{"anyOf":[{"type":"string"},{"type":"object","properties":{"file":{"type":"string"},"repository":{"type":"string"},"namespace_prefix":{"type":"string"},"namespace_uri":{"type":"string","format":"uri"}},"required":["file"],"additionalProperties":false}]},"schema_definition":{"type":"object","properties":{"type":{"type":"string"},"description":{"$ref":"#/definitions/description"},"constraints":{"type":"array","items":{"$ref":"#/definitions/constraint_clause"}},"key_schema":{"$ref":"#/definitions/schema_definition"},"entry_schema":{"$ref":"#/definitions/schema_definition"}},"required":["type"],"additionalProperties":false},"property_definition":{"anyOf":[{"type":"object","properties":{"type":{"type":"string"},"description":{"$ref":"#/definitions/description"},"required":{"type":"boolean"},"default":{"$ref":"#/definitions/value"},"status":{"$ref":"#/definitions/status"},"constraints":{"type":"array","items":{"$ref":"#/definitions/constraint_clause"}},"key_schema":{"$ref":"#/definitions/schema_definition"},"entry_schema":{"$ref":"#/definitions/schema_definition"},"external_schema":{"type":"string"},"metadata":{"$ref":"#/definitions/metadata"}},"additionalProperties":false,"required":["type"]},{"$ref":"#/definitions/parameter_definition"},{"$ref":"#/definitions/value"}]},"status":{"type":"string","enum":["supported","unsupported","experimental","deprecated"]},"property_assignment":{"$ref":"#/definitions/value"},"attribute_definition":{"type":"object","properties":{"type":{"type":"string"},"description":{"$ref":"#/definitions/description"},"default":{"$ref":"#/definitions/value"},"status":{"$ref":"#/definitions/status"},"key_schema":{"$ref":"#/definitions/schema_definition"},"entry_schema":{"$ref":"#/definitions/schema_definition"}},"additionalProperties":false,"required":["type"]},"attribute_assignment":{"$ref":"#/definitions/value"},"parameter_definition":{"type":"object","properties":{"type":{"type":"string"},"description":{"$ref":"#/definitions/description"},"required":{"type":"boolean"},"default":{"$ref":"#/definitions/value"},"status":{"$ref":"#/definitions/status"},"constraints":{"type":"array","items":{"$ref":"#/definitions/constraint_clause"}},"key_schema":{"$ref":"#/definitions/schema_definition"},"entry_schema":{"$ref":"#/definitions/schema_definition"},"external_schema":{"type":"string"},"metadata":{"$ref":"#/definitions/metadata"},"value":{"$ref":"#/definitions/value"}},"additionalProperties":false},"parameter_assignment":{"anyOf":[{"$ref":"#/definitions/value"},{"type":"object","properties":{"value":{"$ref":"#/definitions/value"}},"minProperties":1,"maxProperties":1,"additionalProperties":false}]},"attribute_mapping_definition":{"type":"array","items":{"type":"string"},"minItems":2,"maxItems":4},"operation_implementation_definition":{"anyOf":[{"type":"string"},{"type":"object","properties":{"primary":{"$ref":"#/definitions/artifact_definition"},"dependencies":{"type":"array","items":{"$ref":"#/definitions/artifact_definition"}},"timeout":{"type":"integer","minimum":0},"operation_host":{"type":"string","enum":["SELF","HOST","SOURCE","TARGET","ORCHESTRATOR"]}},"additionalProperties":false}]},"operation_definition_in_types":{"anyOf":[{"type":"string"},{"type":"object","properties":{"description":{"$ref":"#/definitions/description"},"implementation":{"$ref":"#/definitions/operation_implementation_definition"},"inputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/parameter_definition"}},"outputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/attribute_mapping"}}},"additionalProperties":false}]},"operation_definition_in_templates":{"anyOf":[{"type":"string"},{"type":"object","properties":{"description":{"$ref":"#/definitions/description"},"implementation":{"$ref":"#/definitions/operation_implementation_definition"},"inputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_assignment"}},"outputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/attribute_mapping"}}},"additionalProperties":false}]},"notification_implementation_definition":{"anyOf":[{"type":"string"},{"type":"object","properties":{"primary":{"$ref":"#/definitions/artifact_definition"},"dependencies":{"type":"array","items":{"$ref":"#/definitions/artifact_definition"}}},"additionalProperties":false}]},"notification_definition_in_types":{"anyOf":[{"type":"string"},{"type":"object","properties":{"description":{"$ref":"#/definitions/description"},"implementation":{"$ref":"#/definitions/notification_implementation_definition"},"outputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/attribute_mapping_definition"}}},"additionalProperties":false}]},"notification_definition_in_templates":{"anyOf":[{"type":"string"},{"type":"object","properties":{"description":{"$ref":"#/definitions/description"},"implementation":{"$ref":"#/definitions/notification_implementation_definition"}},"additionalProperties":false}]},"interface_definition_in_types":{"type":"object","properties":{"description":{"$ref":"#/definitions/description"},"type":{"type":"string"},"inputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/parameter_definition"}},"operations":{"type":"object","additionalProperties":{"$ref":"#/definitions/operation_definition_in_types"}},"notifications":{"type":"object","additionalProperties":{"$ref":"#/definitions/notification_definition_in_types"}}},"additionalProperties":false},"interface_definition_in_templates":{"type":"object","properties":{"description":{"$ref":"#/definitions/description"},"type":{"type":"string"},"inputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_assignment"}},"operations":{"type":"object","additionalProperties":{"$ref":"#/definitions/operation_definition_in_templates"}},"notifications":{"type":"object","additionalProperties":{"$ref":"#/definitions/notification_definition_in_templates"}}},"additionalProperties":false},"event_filter_definition":{"type":"object","properties":{"node":{"type":"string"},"requirement":{"type":"string"},"capability":{"type":"string"}},"additionalProperties":false,"required":["node"]},"trigger_definition":{"type":"object","properties":{"description":{"$ref":"#/definitions/description"},"event":{"type":"string"},"schedule":{"type":"object","properties":{"start_time":{},"end_time":{}},"additionalProperties":false,"required":["start_time","end_time"]},"target_filter":{"$ref":"#/definitions/event_filter_definition"},"condition":{"oneOf":[{"$ref":"#/definitions/condition_clause_definition"},{"type":"object","properties":{"constraint":{"oneOf":[{"$ref":"#/definitions/condition_clause_definition"},{"type":"array","items":{"$ref":"#/definitions/condition_clause_definition"}}]},"period":{"$ref":"#/definitions/scalar_unit"},"evaluations":{"type":"integer"},"method":{"type":"string"}},"additionalProperties":false},{"type":"array","items":{"$ref":"#/definitions/condition_clause_definition"}}]},"action":{"type":"array","items":{"$ref":"#/definitions/activity_definition"}}},"additionalProperties":false,"required":["event","action"]},"activity_definition":{"type":"object","properties":{"delegate":{"$ref":"#/definitions/delegate_workflow_activity_definition"},"set_state":{"$ref":"#/definitions/set_state_activity_definition"},"call_operation":{"$ref":"#/definitions/call_operation_activity_definition"},"inline":{"$ref":"#/definitions/inline_workflow_activity_definition"}},"additionalProperties":false,"minProperties":1,"maxProperties":1},"delegate_workflow_activity_definition":{"oneOf":[{"type":"string"},{"type":"object","properties":{"workflow":{"type":"string"},"inputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/parameter_assignment"}}},"additionalProperties":false}]},"set_state_activity_definition":{"type":"string"},"call_operation_activity_definition":{"oneOf":[{"type":"string"},{"type":"object","properties":{"operation":{"type":"string"},"inputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/parameter_assignment"}}},"additionalProperties":false}]},"inline_workflow_activity_definition":{"oneOf":[{"type":"string"},{"type":"object","properties":{"workflow":{"type":"string"},"inputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/parameter_assignment"}}},"additionalProperties":false}]},"assertion_definition":{"type":"object","additionalProperties":{"type":"array","items":{"$ref":"#/definitions/constraint_clause"}},"minProperties":1,"maxProperties":1},"condition_clause_definition":{"type":"object","properties":{"and":{"type":"array","items":{"$ref":"#/definitions/condition_clause_definition"}},"or":{"type":"array","items":{"$ref":"#/definitions/condition_clause_definition"}},"not":{"type":"array","items":{"$ref":"#/definitions/condition_clause_definition"}},"assert":{"type":"array","items":{"$ref":"#/definitions/assertion_definition"}}},"additionalProperties":{"type":"array","items":{"$ref":"#/definitions/constraint_clause"}},"minProperties":1,"maxProperties":1},"workflow_precondition_definition":{"type":"object","properties":{"target":{"type":"string"},"target_relationship":{"type":"string"},"condition":{"type":"array","items":{"$ref":"#/definitions/condition_clause_definition"}}},"additionalProperties":false,"required":["target"]},"workflow_step_definition":{"type":"object","properties":{"target":{"type":"string"},"target_relationship":{"type":"string"},"operation_host":{"type":"string"},"filter":{"type":"array","items":{"$ref":"#/definitions/condition_clause_definition"}},"activities":{"type":"array","items":{"$ref":"#/definitions/activity_definition"}},"on_success":{"type":"array","items":{"type":"string"}},"on_failure":{"type":"array","items":{"type":"string"}}},"additionalProperties":false,"required":["target","activities"]},"entity_type":{"type":"object","properties":{"derived_from":{"type":"string"},"version":{"$ref":"#/definitions/version"},"metadata":{"$ref":"#/definitions/metadata"},"description":{"$ref":"#/definitions/description"}}},"capability_definition":{"anyOf":[{"type":"string"},{"type":"object","properties":{"type":{"type":"string"},"description":{"$ref":"#/definitions/description"},"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_definition"}},"attributes":{"type":"object","additionalProperties":{"$ref":"#/definitions/attribute_definition"}},"valid_source_types":{"type":"array","items":{"type":"string"},"minItems":1},"occurrences":{"$ref":"#/definitions/occurrences"}},"additionalProperties":false}]},"occurrences":{"$ref":"#/definitions/range"},"requirement_definition":{"anyOf":[{"type":"string"},{"type":"object","properties":{"description":{"$ref":"#/definitions/description"},"capability":{"type":"string"},"node":{"type":"string"},"relationship":{"anyOf":[{"type":"string"},{"type":"object","properties":{"type":{"type":"string"},"interfaces":{"type":"object","additionalProperties":{"$ref":"#/definitions/interface_definition_in_types"}}},"additionalProperties":false}]},"occurrences":{"$ref":"#/definitions/occurrences"}},"additionalProperties":false}]},"artifact_type":{"type":"object","properties":{"derived_from":{"type":"string"},"version":{"$ref":"#/definitions/version"},"metadata":{"$ref":"#/definitions/metadata"},"description":{"$ref":"#/definitions/description"},"mime_type":{"type":"string"},"file_ext":{"type":"array","items":{"type":"string"}},"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_definition"}}},"additionalProperties":false},"interface_type":{"type":"object","anyOf":[{"properties":{"derived_from":{"type":"string"},"version":{"$ref":"#/definitions/version"},"metadata":{"$ref":"#/definitions/metadata"},"description":{"$ref":"#/definitions/description"},"inputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/parameter_definition"}},"operations":{"type":"object","additionalProperties":{"$ref":"#/definitions/operation_definition_in_types"}},"notifications":{"type":"object","additionalProperties":{"$ref":"#/definitions/notification_definition_in_types"}}},"additionalProperties":false},{"properties":{"derived_from":{"type":"string"},"version":{"$ref":"#/definitions/version"},"metadata":{"$ref":"#/definitions/metadata"},"description":{"$ref":"#/definitions/description"}},"additionalProperties":{"$ref":"#/definitions/operation_definition_in_types"}}]},"data_type":{"type":"object","properties":{"derived_from":{"type":"string"},"version":{"$ref":"#/definitions/version"},"metadata":{"$ref":"#/definitions/metadata"},"description":{"$ref":"#/definitions/description"},"constraints":{"type":"array","items":{"$ref":"#/definitions/constraint_clause"}},"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_definition"}},"key_schema":{"$ref":"#/definitions/schema_definition"},"entry_schema":{"$ref":"#/definitions/schema_definition"}},"additionalProperties":false},"capability_type":{"type":"object","properties":{"derived_from":{"type":"string"},"version":{"$ref":"#/definitions/version"},"metadata":{"$ref":"#/definitions/metadata"},"description":{"$ref":"#/definitions/description"},"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_definition"}},"attributes":{"type":"object","additionalProperties":{"$ref":"#/definitions/attribute_definition"}},"valid_source_types":{"type":"array","items":{"type":"string"}}},"additionalProperties":false},"node_type":{"type":"object","properties":{"derived_from":{"type":"string"},"version":{"$ref":"#/definitions/version"},"metadata":{"$ref":"#/definitions/metadata"},"description":{"$ref":"#/definitions/description"},"attributes":{"type":"object","additionalProperties":{"$ref":"#/definitions/attribute_definition"}},"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_definition"}},"requirements":{"type":"array","items":{"type":"object","additionalProperties":{"$ref":"#/definitions/requirement_definition"},"maxProperties":1}},"capabilities":{"type":"object","additionalProperties":{"$ref":"#/definitions/capability_definition"}},"interfaces":{"type":"object","additionalProperties":{"$ref":"#/definitions/interface_definition_in_types"}},"artifacts":{"type":"object","additionalProperties":{"$ref":"#/definitions/artifact_definition"}}},"additionalProperties":false},"relationship_type":{"type":"object","properties":{"derived_from":{"type":"string"},"version":{"$ref":"#/definitions/version"},"metadata":{"$ref":"#/definitions/metadata"},"description":{"$ref":"#/definitions/description"},"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_definition"}},"attributes":{"type":"object","additionalProperties":{"$ref":"#/definitions/attribute_definition"}},"interfaces":{"type":"object","additionalProperties":{"$ref":"#/definitions/interface_definition_in_types"}},"valid_target_types":{"type":"array","items":{"type":"string"}}},"additionalProperties":false},"group_type":{"type":"object","properties":{"derived_from":{"type":"string"},"version":{"$ref":"#/definitions/version"},"metadata":{"$ref":"#/definitions/metadata"},"description":{"$ref":"#/definitions/description"},"attributes":{"type":"object","additionalProperties":{"$ref":"#/definitions/attribute_definition"}},"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_definition"}},"members":{"type":"array","items":{"type":"string"}},"requirements":{"type":"array","items":{"type":"object","additionalProperties":{"$ref":"#/definitions/requirement_definition"},"maxProperties":1}},"capabilities":{"type":"object","additionalProperties":{"$ref":"#/definitions/capability_definition"}},"interfaces":{"type":"object","additionalProperties":{"$ref":"#/definitions/interface_definition_in_types"}}},"additionalProperties":false},"policy_type":{"type":"object","properties":{"derived_from":{"type":"string"},"version":{"$ref":"#/definitions/version"},"metadata":{"$ref":"#/definitions/metadata"},"description":{"$ref":"#/definitions/description"},"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_definition"}},"targets":{"type":"array","items":{"type":"string"}},"triggers":{"type":"object","additionalProperties":{"$ref":"#/definitions/trigger_definition"}}},"additionalProperties":false},"capability_assignment":{"anyOf":[{"type":"object","properties":{"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_assignment"}},"attributes":{"type":"object","additionalProperties":{"$ref":"#/definitions/attribute_assignment"}},"occurrences":{"$ref":"#/definitions/occurrences"}},"additionalProperties":false}]},"requirement_assignment":{"anyOf":[{"type":"string"},{"type":"object","properties":{"capability":{"type":"string"},"node":{"type":"string"},"relationship":{"anyOf":[{"type":"string"},{"type":"object","properties":{"type":{"type":"string"},"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_assignment"}},"interfaces":{"type":"object","additionalProperties":{"$ref":"#/definitions/interface_definition_in_templates"}}},"additionalProperties":false}]},"node_filter":{"$ref":"#/definitions/node_filter_definition"},"occurrences":{"$ref":"#/definitions/occurrences"}},"additionalProperties":false}]},"node_template":{"type":"object","properties":{"type":{"type":"string"},"description":{"$ref":"#/definitions/description"},"metadata":{"$ref":"#/definitions/metadata"},"directives":{"$ref":"#/definitions/directives"},"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_assignment"}},"attributes":{"type":"object","additionalProperties":{"$ref":"#/definitions/attribute_assignment"}},"requirements":{"type":"array","items":{"type":"object","additionalProperties":{"$ref":"#/definitions/requirement_assignment"},"maxProperties":1}},"capabilities":{"type":"object","additionalProperties":{"$ref":"#/definitions/capability_assignment"}},"interfaces":{"type":"object","additionalProperties":{"$ref":"#/definitions/interface_definition_in_templates"}},"artifacts":{"type":"object","additionalProperties":{"$ref":"#/definitions/artifact_definition"}},"node_filter":{"$ref":"#/definitions/node_filter_definition"},"copy":{"type":"string"}},"additionalProperties":false,"required":["type"]},"relationship_template":{"type":"object","properties":{"type":{"type":"string"},"description":{"$ref":"#/definitions/description"},"metadata":{"$ref":"#/definitions/metadata"},"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_assignment"}},"attributes":{"type":"object","additionalProperties":{"$ref":"#/definitions/attribute_assignment"}},"interfaces":{"type":"object","additionalProperties":{"$ref":"#/definitions/interface_definition_in_templates"}},"copy":{"type":"string"}},"additionalProperties":false,"required":["type"]},"group_definition":{"type":"object","properties":{"type":{"type":"string"},"description":{"$ref":"#/definitions/description"},"metadata":{"$ref":"#/definitions/metadata"},"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_assignment"}},"members":{"type":"array","items":{"type":"string"}}},"additionalProperties":false,"required":["type"]},"policy_definition":{"type":"object","properties":{"type":{"type":"string"},"description":{"$ref":"#/definitions/description"},"metadata":{"$ref":"#/definitions/metadata"},"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_assignment"}},"targets":{"type":"array","items":{"type":"string"}},"triggers":{"type":"object","additionalProperties":{"$ref":"#/definitions/trigger_definition"}}},"additionalProperties":false,"required":["type"]},"imperative_workflow_definition":{"type":"object","anyOf":[{"properties":{"description":{"$ref":"#/definitions/description"},"metadata":{"$ref":"#/definitions/metadata"},"inputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/parameter_definition"}},"preconditions":{"type":"array","items":{"$ref":"#/definitions/workflow_precondition_definition"}},"steps":{"type":"object","additionalProperties":{"$ref":"#/definitions/workflow_step_definition"}},"outputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/attribute_mapping"}}},"additionalProperties":false},{"properties":{"description":{"$ref":"#/definitions/description"},"metadata":{"$ref":"#/definitions/metadata"},"inputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/parameter_definition"}},"preconditions":{"type":"array","items":{"$ref":"#/definitions/workflow_precondition_definition"}},"implementation":{"$ref":"#/definitions/operation_implementation_definition"},"outputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/attribute_mapping"}}},"additionalProperties":false}]},"property_mapping":{"anyOf":[{"$ref":"#/definitions/value"},{"type":"array","items":{"type":"string"},"minItems":1,"maxItems":1},{"type":"object","oneOf":[{"properties":{"mapping":{"type":"array","items":[{"type":"string"}],"maxItems":1}}},{"properties":{"value":{"$ref":"#/definitions/value"}}}],"additionalProperties":false}]},"attribute_mapping":{"anyOf":[{"$ref":"#/definitions/value"},{"type":"array","items":{"type":"string"},"minItems":1,"maxItems":1},{"type":"object","properties":{"mapping":{"type":"array","items":[{"type":"string"}],"maxItems":1}},"additionalProperties":false}]},"capability_mapping":{"anyOf":[{"type":"array","items":{"type":"string"},"minitems":2,"maxItems":2},{"type":"object","oneOf":[{"properties":{"mapping":{"type":"array","items":{"type":"string"},"minItems":2,"maxItems":2}}},{"properties":{"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_assignment"}},"attributes":{"type":"object","additionalProperties":{"$ref":"#/definitions/attribute_assignment"}}}}],"additionalProperties":false}]},"requirement_mapping":{"anyOf":[{"type":"array","items":[{"type":"string"}],"minItems":2,"maxItems":2},{"type":"object","oneOf":[{"properties":{"mapping":{"type":"array","items":{"type":"string"},"minItems":2,"maxItems":2}}},{"properties":{"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_assignment"}},"attributes":{"type":"object","additionalProperties":{"$ref":"#/definitions/attribute_assignment"}}}}],"additionalProperties":false}]},"interface_mapping":{"type":"object","additionalProperties":{"type":"string"}},"substitution_mapping":{"type":"object","properties":{"node_type":{"type":"string"},"substitution_filter":{"$ref":"#/definitions/node_filter_definition"},"properties":{"type":"object","additionalProperties":{"$ref":"#/definitions/property_mapping"}},"attributes":{"type":"object","additionalProperties":{"$ref":"#/definitions/attribute_mapping"}},"capabilities":{"type":"object","additionalProperties":{"$ref":"#/definitions/capability_mapping"}},"requirements":{"anyOf":[{"type":"object","additionalProperties":{"$ref":"#/definitions/requirement_mapping"}},{"type":"array","items":{"type":"object","additionalProperties":{"$ref":"#/definitions/requirement_mapping"},"maxProperties":1}}]},"interfaces":{"type":"object","additionalProperties":{"$ref":"#/definitions/interface_mapping"}}},"additionalProperties":false,"required":["node_type"]},"topology_template_definition":{"type":"object","properties":{"description":{"$ref":"#/definitions/description"},"inputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/parameter_definition"}},"node_templates":{"type":"object","additionalProperties":{"$ref":"#/definitions/node_template"}},"relationship_templates":{"type":"object","additionalProperties":{"$ref":"#/definitions/relationship_template"}},"groups":{"type":"object","additionalProperties":{"$ref":"#/definitions/group_definition"}},"policies":{"type":"array","items":{"type":"object","additionalProperties":{"$ref":"#/definitions/policy_definition"}}},"outputs":{"type":"object","additionalProperties":{"$ref":"#/definitions/parameter_definition"}},"substitution_mappings":{"$ref":"#/definitions/substitution_mapping"},"workflows":{"type":"object","additionalProperties":{"$ref":"#/definitions/imperative_workflow_definition"}}},"additionalProperties":false},"service_template_definition":{"type":"object","properties":{"tosca_definitions_version":{"type":"string"},"namespace":{"type":"string","format":"uri"},"metadata":{"allOf":[{"$ref":"#/definitions/metadata"},{"properties":{"template_name":{"type":"string"},"template_author":{"type":"string"},"template_version":{"$ref":"#/definitions/version"}}}]},"description":{"$ref":"#/definitions/description"},"dsl_definitions":{"type":"object"},"repositories":{"type":"object","additionalProperties":{"$ref":"#/definitions/repository_definition"}},"imports":{"type":"array","items":{"$ref":"#/definitions/import_definition"}},"artifact_types":{"type":"object","additionalProperties":{"$ref":"#/definitions/artifact_type"}},"data_types":{"type":"object","additionalProperties":{"$ref":"#/definitions/data_type"}},"capability_types":{"type":"object","additionalProperties":{"$ref":"#/definitions/capability_type"}},"interface_types":{"type":"object","additionalProperties":{"$ref":"#/definitions/interface_type"}},"relationship_types":{"type":"object","additionalProperties":{"$ref":"#/definitions/relationship_type"}},"node_types":{"type":"object","additionalProperties":{"$ref":"#/definitions/node_type"}},"group_types":{"type":"object","additionalProperties":{"$ref":"#/definitions/group_type"}},"policy_types":{"type":"object","additionalProperties":{"$ref":"#/definitions/policy_type"}},"topology_template":{"$ref":"#/definitions/topology_template_definition"}},"required":["tosca_definitions_version"],"additionalProperties":false}}}
+{
+	"$id": "tosca_simple_yaml_1_3",
+	"title": "OASIS TOSCA Simple Profile in YAML Version 1.3 JSON Schema",
+	"description": "JSON Schema for OASIS TOSCA Simple Profile in YAML Version 1.3",
+	"$ref": "#/definitions/service_template_definition",
+	"definitions": {
+		"value": {},
+		"version": {
+			"anyOf": [{
+				"type": "string"
+			}, {
+				"type": "number"
+			}]
+		},
+		"range": {
+			"type": "array",
+			"items": [{
+				"type": "integer",
+				"minimum": 0
+			}, {
+				"oneOf": [{
+					"type": "integer",
+					"minimum": 0
+				}, {
+					"enum": ["UNBOUNDED"]
+				}]
+			}],
+			"minItems": 2,
+			"maxItems": 2
+		},
+		"scalar_unit": {
+			"type": "string",
+			"pattern": "^[0-9]+( )*[A-Za-z]+$"
+		},
+		"directives": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": ["substitute", "substitutable", "select", "selectable"]
+			},
+			"maxItems": 2
+		},
+		"description": {
+			"type": "string"
+		},
+		"metadata": {
+			"type": "object",
+			"additionalProperties": {
+				"anyOf": [{
+					"type": "string"
+				}, {
+					"type": "number"
+				}]
+			}
+		},
+		"constraint_clause": {
+			"oneOf": [{
+				"$ref": "#/definitions/scalar"
+			}, {
+				"$ref": "#/definitions/constraint_clause_with_operator"
+			}]
+		},
+		"constraint_clause_with_operator": {
+			"type": "object",
+			"properties": {
+				"equal": {
+					"$ref": "#/definitions/value"
+				},
+				"greater_than": {
+					"$ref": "#/definitions/value"
+				},
+				"greater_or_equal": {
+					"$ref": "#/definitions/value"
+				},
+				"less_than": {
+					"$ref": "#/definitions/value"
+				},
+				"less_or_equal": {
+					"$ref": "#/definitions/value"
+				},
+				"in_range": {
+					"type": "array",
+					"items": [{
+						"$ref": "#/definitions/value"
+					}, {
+						"$ref": "#/definitions/value"
+					}],
+					"maxItems": 2
+				},
+				"valid_values": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/value"
+					}
+				},
+				"length": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"min_length": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"max_length": {
+					"type": "integer",
+					"minimum": 0
+				},
+				"pattern": {
+					"type": "string"
+				},
+				"schema": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": false,
+			"minProperties": 1,
+			"maxProperties": 1
+		},
+		"scalar": {
+			"anyOf": [{
+				"type": "boolean"
+			}, {
+				"type": "string"
+			}, {
+				"type": "number"
+			}]
+		},
+		"property_filter_definition": {
+			"type": "object",
+			"additionalProperties": {
+				"oneOf": [{
+					"$ref": "#/definitions/constraint_clause"
+				}, {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/constraint_clause"
+					}
+				}]
+			},
+			"minProperties": 1,
+			"maxProperties": 1
+		},
+		"node_filter_definition": {
+			"type": "object",
+			"properties": {
+				"properties": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/property_filter_definition"
+					}
+				},
+				"capabilities": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"additionalProperties": {
+							"type": "object",
+							"properties": {
+								"properties": {
+									"type": "array",
+									"items": {
+										"$ref": "#/definitions/property_filter_definition"
+									}
+								}
+							},
+							"additionalProperties": false
+						}
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"repository_definition": {
+			"anyOf": [{
+				"type": "string"
+			}, {
+				"type": "object",
+				"properties": {
+					"description": {
+						"$ref": "#/definitions/description"
+					},
+					"url": {
+						"type": "string"
+					},
+					"credential": {
+						"type": "object"
+					}
+				},
+				"required": ["url"],
+				"additionalProperties": false
+			}]
+		},
+		"artifact_definition": {
+			"anyOf": [{
+				"type": "string"
+			}, {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string"
+					},
+					"file": {
+						"type": "string"
+					},
+					"repository": {
+						"type": "string"
+					},
+					"description": {
+						"$ref": "#/definitions/description"
+					},
+					"deploy_path": {
+						"type": "string"
+					},
+					"artifact_version": {
+						"type": "string"
+					},
+					"checksum": {
+						"type": "string"
+					},
+					"checksum_algorithm": {
+						"type": "string"
+					},
+					"properties": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/property_assignment"
+						}
+					}
+				},
+				"additionalProperties": false,
+				"required": ["type", "file"]
+			}]
+		},
+		"import_definition": {
+			"anyOf": [{
+				"type": "string"
+			}, {
+				"type": "object",
+				"properties": {
+					"file": {
+						"type": "string"
+					},
+					"repository": {
+						"type": "string"
+					},
+					"namespace_prefix": {
+						"type": "string"
+					},
+					"namespace_uri": {
+						"type": "string",
+						"format": "uri"
+					}
+				},
+				"required": ["file"],
+				"additionalProperties": false
+			}]
+		},
+		"schema_definition": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string"
+				},
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"constraints": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/constraint_clause"
+					}
+				},
+				"key_schema": {
+					"$ref": "#/definitions/schema_definition"
+				},
+				"entry_schema": {
+					"$ref": "#/definitions/schema_definition"
+				}
+			},
+			"required": ["type"],
+			"additionalProperties": false
+		},
+		"property_definition": {
+			"anyOf": [{
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string"
+					},
+					"description": {
+						"$ref": "#/definitions/description"
+					},
+					"required": {
+						"type": "boolean"
+					},
+					"default": {
+						"$ref": "#/definitions/value"
+					},
+					"status": {
+						"$ref": "#/definitions/status"
+					},
+					"constraints": {
+						"type": "array",
+						"items": {
+							"$ref": "#/definitions/constraint_clause"
+						}
+					},
+					"key_schema": {
+						"$ref": "#/definitions/schema_definition"
+					},
+					"entry_schema": {
+						"$ref": "#/definitions/schema_definition"
+					},
+					"external_schema": {
+						"type": "string"
+					},
+					"metadata": {
+						"$ref": "#/definitions/metadata"
+					}
+				},
+				"additionalProperties": false,
+				"required": ["type"]
+			}, {
+				"$ref": "#/definitions/parameter_definition"
+			}, {
+				"$ref": "#/definitions/value"
+			}]
+		},
+		"status": {
+			"type": "string",
+			"enum": ["supported", "unsupported", "experimental", "deprecated"]
+		},
+		"property_assignment": {
+			"$ref": "#/definitions/value"
+		},
+		"attribute_definition": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string"
+				},
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"default": {
+					"$ref": "#/definitions/value"
+				},
+				"status": {
+					"$ref": "#/definitions/status"
+				},
+				"key_schema": {
+					"$ref": "#/definitions/schema_definition"
+				},
+				"entry_schema": {
+					"$ref": "#/definitions/schema_definition"
+				}
+			},
+			"additionalProperties": false,
+			"required": ["type"]
+		},
+		"attribute_assignment": {
+			"$ref": "#/definitions/value"
+		},
+		"parameter_definition": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string"
+				},
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"required": {
+					"type": "boolean"
+				},
+				"default": {
+					"$ref": "#/definitions/value"
+				},
+				"status": {
+					"$ref": "#/definitions/status"
+				},
+				"constraints": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/constraint_clause"
+					}
+				},
+				"key_schema": {
+					"$ref": "#/definitions/schema_definition"
+				},
+				"entry_schema": {
+					"$ref": "#/definitions/schema_definition"
+				},
+				"external_schema": {
+					"type": "string"
+				},
+				"metadata": {
+					"$ref": "#/definitions/metadata"
+				},
+				"value": {
+					"$ref": "#/definitions/value"
+				}
+			},
+			"additionalProperties": false
+		},
+		"parameter_assignment": {
+			"anyOf": [{
+				"$ref": "#/definitions/value"
+			}, {
+				"type": "object",
+				"properties": {
+					"value": {
+						"$ref": "#/definitions/value"
+					}
+				},
+				"minProperties": 1,
+				"maxProperties": 1,
+				"additionalProperties": false
+			}]
+		},
+		"attribute_mapping_definition": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"minItems": 2,
+			"maxItems": 4
+		},
+		"operation_implementation_definition": {
+			"anyOf": [{
+				"type": "string"
+			}, {
+				"type": "object",
+				"properties": {
+					"primary": {
+						"$ref": "#/definitions/artifact_definition"
+					},
+					"dependencies": {
+						"type": "array",
+						"items": {
+							"$ref": "#/definitions/artifact_definition"
+						}
+					},
+					"timeout": {
+						"type": "integer",
+						"minimum": 0
+					},
+					"operation_host": {
+						"type": "string",
+						"enum": ["SELF", "HOST", "SOURCE", "TARGET", "ORCHESTRATOR"]
+					}
+				},
+				"additionalProperties": false
+			}]
+		},
+		"operation_definition_in_types": {
+			"anyOf": [{
+				"type": "string"
+			}, {
+				"type": "object",
+				"properties": {
+					"description": {
+						"$ref": "#/definitions/description"
+					},
+					"implementation": {
+						"$ref": "#/definitions/operation_implementation_definition"
+					},
+					"inputs": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/parameter_definition"
+						}
+					},
+					"outputs": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/attribute_mapping"
+						}
+					}
+				},
+				"additionalProperties": false
+			}]
+		},
+		"operation_definition_in_templates": {
+			"anyOf": [{
+				"type": "string"
+			}, {
+				"type": "object",
+				"properties": {
+					"description": {
+						"$ref": "#/definitions/description"
+					},
+					"implementation": {
+						"$ref": "#/definitions/operation_implementation_definition"
+					},
+					"inputs": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/property_assignment"
+						}
+					},
+					"outputs": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/attribute_mapping"
+						}
+					}
+				},
+				"additionalProperties": false
+			}]
+		},
+		"notification_implementation_definition": {
+			"anyOf": [{
+				"type": "string"
+			}, {
+				"type": "object",
+				"properties": {
+					"primary": {
+						"$ref": "#/definitions/artifact_definition"
+					},
+					"dependencies": {
+						"type": "array",
+						"items": {
+							"$ref": "#/definitions/artifact_definition"
+						}
+					}
+				},
+				"additionalProperties": false
+			}]
+		},
+		"notification_definition_in_types": {
+			"anyOf": [{
+				"type": "string"
+			}, {
+				"type": "object",
+				"properties": {
+					"description": {
+						"$ref": "#/definitions/description"
+					},
+					"implementation": {
+						"$ref": "#/definitions/notification_implementation_definition"
+					},
+					"outputs": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/attribute_mapping_definition"
+						}
+					}
+				},
+				"additionalProperties": false
+			}]
+		},
+		"notification_definition_in_templates": {
+			"anyOf": [{
+				"type": "string"
+			}, {
+				"type": "object",
+				"properties": {
+					"description": {
+						"$ref": "#/definitions/description"
+					},
+					"implementation": {
+						"$ref": "#/definitions/notification_implementation_definition"
+					}
+				},
+				"additionalProperties": false
+			}]
+		},
+		"interface_definition_in_types": {
+			"type": "object",
+			"properties": {
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"type": {
+					"type": "string"
+				},
+				"inputs": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/parameter_definition"
+					}
+				},
+				"operations": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/operation_definition_in_types"
+					}
+				},
+				"notifications": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/notification_definition_in_types"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"interface_definition_in_templates": {
+			"type": "object",
+			"properties": {
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"type": {
+					"type": "string"
+				},
+				"inputs": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/property_assignment"
+					}
+				},
+				"operations": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/operation_definition_in_templates"
+					}
+				},
+				"notifications": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/notification_definition_in_templates"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"event_filter_definition": {
+			"type": "object",
+			"properties": {
+				"node": {
+					"type": "string"
+				},
+				"requirement": {
+					"type": "string"
+				},
+				"capability": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": false,
+			"required": ["node"]
+		},
+		"trigger_definition": {
+			"type": "object",
+			"properties": {
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"event": {
+					"type": "string"
+				},
+				"schedule": {
+					"type": "object",
+					"properties": {
+						"start_time": {},
+						"end_time": {}
+					},
+					"additionalProperties": false,
+					"required": ["start_time", "end_time"]
+				},
+				"target_filter": {
+					"$ref": "#/definitions/event_filter_definition"
+				},
+				"condition": {
+					"oneOf": [{
+						"$ref": "#/definitions/condition_clause_definition"
+					}, {
+						"type": "object",
+						"properties": {
+							"constraint": {
+								"oneOf": [{
+									"$ref": "#/definitions/condition_clause_definition"
+								}, {
+									"type": "array",
+									"items": {
+										"$ref": "#/definitions/condition_clause_definition"
+									}
+								}]
+							},
+							"period": {
+								"$ref": "#/definitions/scalar_unit"
+							},
+							"evaluations": {
+								"type": "integer"
+							},
+							"method": {
+								"type": "string"
+							}
+						},
+						"additionalProperties": false
+					}, {
+						"type": "array",
+						"items": {
+							"$ref": "#/definitions/condition_clause_definition"
+						}
+					}]
+				},
+				"action": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/activity_definition"
+					}
+				}
+			},
+			"additionalProperties": false,
+			"required": ["event", "action"]
+		},
+		"activity_definition": {
+			"type": "object",
+			"properties": {
+				"delegate": {
+					"$ref": "#/definitions/delegate_workflow_activity_definition"
+				},
+				"set_state": {
+					"$ref": "#/definitions/set_state_activity_definition"
+				},
+				"call_operation": {
+					"$ref": "#/definitions/call_operation_activity_definition"
+				},
+				"inline": {
+					"$ref": "#/definitions/inline_workflow_activity_definition"
+				}
+			},
+			"additionalProperties": false,
+			"minProperties": 1,
+			"maxProperties": 1
+		},
+		"delegate_workflow_activity_definition": {
+			"oneOf": [{
+				"type": "string"
+			}, {
+				"type": "object",
+				"properties": {
+					"workflow": {
+						"type": "string"
+					},
+					"inputs": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/parameter_assignment"
+						}
+					}
+				},
+				"additionalProperties": false
+			}]
+		},
+		"set_state_activity_definition": {
+			"type": "string"
+		},
+		"call_operation_activity_definition": {
+			"oneOf": [{
+				"type": "string"
+			}, {
+				"type": "object",
+				"properties": {
+					"operation": {
+						"type": "string"
+					},
+					"inputs": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/parameter_assignment"
+						}
+					}
+				},
+				"additionalProperties": false
+			}]
+		},
+		"inline_workflow_activity_definition": {
+			"oneOf": [{
+				"type": "string"
+			}, {
+				"type": "object",
+				"properties": {
+					"workflow": {
+						"type": "string"
+					},
+					"inputs": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/parameter_assignment"
+						}
+					}
+				},
+				"additionalProperties": false
+			}]
+		},
+		"assertion_definition": {
+			"type": "object",
+			"additionalProperties": {
+				"type": "array",
+				"items": {
+					"$ref": "#/definitions/constraint_clause"
+				}
+			},
+			"minProperties": 1,
+			"maxProperties": 1
+		},
+		"condition_clause_definition": {
+			"type": "object",
+			"properties": {
+				"and": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/condition_clause_definition"
+					}
+				},
+				"or": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/condition_clause_definition"
+					}
+				},
+				"not": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/condition_clause_definition"
+					}
+				},
+				"assert": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/assertion_definition"
+					}
+				}
+			},
+			"additionalProperties": {
+				"type": "array",
+				"items": {
+					"$ref": "#/definitions/constraint_clause"
+				}
+			},
+			"minProperties": 1,
+			"maxProperties": 1
+		},
+		"workflow_precondition_definition": {
+			"type": "object",
+			"properties": {
+				"target": {
+					"type": "string"
+				},
+				"target_relationship": {
+					"type": "string"
+				},
+				"condition": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/condition_clause_definition"
+					}
+				}
+			},
+			"additionalProperties": false,
+			"required": ["target"]
+		},
+		"workflow_step_definition": {
+			"type": "object",
+			"properties": {
+				"target": {
+					"type": "string"
+				},
+				"target_relationship": {
+					"type": "string"
+				},
+				"operation_host": {
+					"type": "string"
+				},
+				"filter": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/condition_clause_definition"
+					}
+				},
+				"activities": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/activity_definition"
+					}
+				},
+				"on_success": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"on_failure": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			},
+			"additionalProperties": false,
+			"required": ["target", "activities"]
+		},
+		"entity_type": {
+			"type": "object",
+			"properties": {
+				"derived_from": {
+					"type": "string"
+				},
+				"version": {
+					"$ref": "#/definitions/version"
+				},
+				"metadata": {
+					"$ref": "#/definitions/metadata"
+				},
+				"description": {
+					"$ref": "#/definitions/description"
+				}
+			}
+		},
+		"capability_definition": {
+			"anyOf": [{
+				"type": "string"
+			}, {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string"
+					},
+					"description": {
+						"$ref": "#/definitions/description"
+					},
+					"properties": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/property_definition"
+						}
+					},
+					"attributes": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/attribute_definition"
+						}
+					},
+					"valid_source_types": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"minItems": 1
+					},
+					"occurrences": {
+						"$ref": "#/definitions/occurrences"
+					}
+				},
+				"additionalProperties": false
+			}]
+		},
+		"occurrences": {
+			"$ref": "#/definitions/range"
+		},
+		"requirement_definition": {
+			"anyOf": [{
+				"type": "string"
+			}, {
+				"type": "object",
+				"properties": {
+					"description": {
+						"$ref": "#/definitions/description"
+					},
+					"capability": {
+						"type": "string"
+					},
+					"node": {
+						"type": "string"
+					},
+					"relationship": {
+						"anyOf": [{
+							"type": "string"
+						}, {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string"
+								},
+								"interfaces": {
+									"type": "object",
+									"additionalProperties": {
+										"$ref": "#/definitions/interface_definition_in_types"
+									}
+								}
+							},
+							"additionalProperties": false
+						}]
+					},
+					"occurrences": {
+						"$ref": "#/definitions/occurrences"
+					}
+				},
+				"additionalProperties": false
+			}]
+		},
+		"artifact_type": {
+			"type": "object",
+			"properties": {
+				"derived_from": {
+					"type": "string"
+				},
+				"version": {
+					"$ref": "#/definitions/version"
+				},
+				"metadata": {
+					"$ref": "#/definitions/metadata"
+				},
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"mime_type": {
+					"type": "string"
+				},
+				"file_ext": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"properties": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/property_definition"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"interface_type": {
+			"type": "object",
+			"anyOf": [{
+				"properties": {
+					"derived_from": {
+						"type": "string"
+					},
+					"version": {
+						"$ref": "#/definitions/version"
+					},
+					"metadata": {
+						"$ref": "#/definitions/metadata"
+					},
+					"description": {
+						"$ref": "#/definitions/description"
+					},
+					"inputs": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/parameter_definition"
+						}
+					},
+					"operations": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/operation_definition_in_types"
+						}
+					},
+					"notifications": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/notification_definition_in_types"
+						}
+					}
+				},
+				"additionalProperties": false
+			}, {
+				"properties": {
+					"derived_from": {
+						"type": "string"
+					},
+					"version": {
+						"$ref": "#/definitions/version"
+					},
+					"metadata": {
+						"$ref": "#/definitions/metadata"
+					},
+					"description": {
+						"$ref": "#/definitions/description"
+					}
+				},
+				"additionalProperties": {
+					"$ref": "#/definitions/operation_definition_in_types"
+				}
+			}]
+		},
+		"data_type": {
+			"type": "object",
+			"properties": {
+				"derived_from": {
+					"type": "string"
+				},
+				"version": {
+					"$ref": "#/definitions/version"
+				},
+				"metadata": {
+					"$ref": "#/definitions/metadata"
+				},
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"constraints": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/constraint_clause"
+					}
+				},
+				"properties": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/property_definition"
+					}
+				},
+				"key_schema": {
+					"$ref": "#/definitions/schema_definition"
+				},
+				"entry_schema": {
+					"$ref": "#/definitions/schema_definition"
+				}
+			},
+			"additionalProperties": false
+		},
+		"capability_type": {
+			"type": "object",
+			"properties": {
+				"derived_from": {
+					"type": "string"
+				},
+				"version": {
+					"$ref": "#/definitions/version"
+				},
+				"metadata": {
+					"$ref": "#/definitions/metadata"
+				},
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"properties": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/property_definition"
+					}
+				},
+				"attributes": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/attribute_definition"
+					}
+				},
+				"valid_source_types": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"node_type": {
+			"type": "object",
+			"properties": {
+				"derived_from": {
+					"type": "string"
+				},
+				"version": {
+					"$ref": "#/definitions/version"
+				},
+				"metadata": {
+					"$ref": "#/definitions/metadata"
+				},
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"attributes": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/attribute_definition"
+					}
+				},
+				"properties": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/property_definition"
+					}
+				},
+				"requirements": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/requirement_definition"
+						},
+						"maxProperties": 1
+					}
+				},
+				"capabilities": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/capability_definition"
+					}
+				},
+				"interfaces": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/interface_definition_in_types"
+					}
+				},
+				"artifacts": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/artifact_definition"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"relationship_type": {
+			"type": "object",
+			"properties": {
+				"derived_from": {
+					"type": "string"
+				},
+				"version": {
+					"$ref": "#/definitions/version"
+				},
+				"metadata": {
+					"$ref": "#/definitions/metadata"
+				},
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"properties": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/property_definition"
+					}
+				},
+				"attributes": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/attribute_definition"
+					}
+				},
+				"interfaces": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/interface_definition_in_types"
+					}
+				},
+				"valid_target_types": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"group_type": {
+			"type": "object",
+			"properties": {
+				"derived_from": {
+					"type": "string"
+				},
+				"version": {
+					"$ref": "#/definitions/version"
+				},
+				"metadata": {
+					"$ref": "#/definitions/metadata"
+				},
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"attributes": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/attribute_definition"
+					}
+				},
+				"properties": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/property_definition"
+					}
+				},
+				"members": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"requirements": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/requirement_definition"
+						},
+						"maxProperties": 1
+					}
+				},
+				"capabilities": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/capability_definition"
+					}
+				},
+				"interfaces": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/interface_definition_in_types"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"policy_type": {
+			"type": "object",
+			"properties": {
+				"derived_from": {
+					"type": "string"
+				},
+				"version": {
+					"$ref": "#/definitions/version"
+				},
+				"metadata": {
+					"$ref": "#/definitions/metadata"
+				},
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"properties": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/property_definition"
+					}
+				},
+				"targets": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"triggers": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/trigger_definition"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"capability_assignment": {
+			"anyOf": [{
+				"type": "object",
+				"properties": {
+					"properties": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/property_assignment"
+						}
+					},
+					"attributes": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/attribute_assignment"
+						}
+					},
+					"occurrences": {
+						"$ref": "#/definitions/occurrences"
+					}
+				},
+				"additionalProperties": false
+			}]
+		},
+		"requirement_assignment": {
+			"anyOf": [{
+				"type": "string"
+			}, {
+				"type": "object",
+				"properties": {
+					"capability": {
+						"type": "string"
+					},
+					"node": {
+						"type": "string"
+					},
+					"relationship": {
+						"anyOf": [{
+							"type": "string"
+						}, {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string"
+								},
+								"properties": {
+									"type": "object",
+									"additionalProperties": {
+										"$ref": "#/definitions/property_assignment"
+									}
+								},
+								"interfaces": {
+									"type": "object",
+									"additionalProperties": {
+										"$ref": "#/definitions/interface_definition_in_templates"
+									}
+								}
+							},
+							"additionalProperties": false
+						}]
+					},
+					"node_filter": {
+						"$ref": "#/definitions/node_filter_definition"
+					},
+					"occurrences": {
+						"$ref": "#/definitions/occurrences"
+					}
+				},
+				"additionalProperties": false
+			}]
+		},
+		"node_template": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string"
+				},
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"metadata": {
+					"$ref": "#/definitions/metadata"
+				},
+				"directives": {
+					"$ref": "#/definitions/directives"
+				},
+				"properties": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/property_assignment"
+					}
+				},
+				"attributes": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/attribute_assignment"
+					}
+				},
+				"requirements": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/requirement_assignment"
+						},
+						"maxProperties": 1
+					}
+				},
+				"capabilities": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/capability_assignment"
+					}
+				},
+				"interfaces": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/interface_definition_in_templates"
+					}
+				},
+				"artifacts": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/artifact_definition"
+					}
+				},
+				"node_filter": {
+					"$ref": "#/definitions/node_filter_definition"
+				},
+				"copy": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": false,
+			"required": ["type"]
+		},
+		"relationship_template": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string"
+				},
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"metadata": {
+					"$ref": "#/definitions/metadata"
+				},
+				"properties": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/property_assignment"
+					}
+				},
+				"attributes": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/attribute_assignment"
+					}
+				},
+				"interfaces": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/interface_definition_in_templates"
+					}
+				},
+				"copy": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": false,
+			"required": ["type"]
+		},
+		"group_definition": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string"
+				},
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"metadata": {
+					"$ref": "#/definitions/metadata"
+				},
+				"properties": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/property_assignment"
+					}
+				},
+				"members": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			},
+			"additionalProperties": false,
+			"required": ["type"]
+		},
+		"policy_definition": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string"
+				},
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"metadata": {
+					"$ref": "#/definitions/metadata"
+				},
+				"properties": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/property_assignment"
+					}
+				},
+				"targets": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"triggers": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/trigger_definition"
+					}
+				}
+			},
+			"additionalProperties": false,
+			"required": ["type"]
+		},
+		"imperative_workflow_definition": {
+			"type": "object",
+			"anyOf": [{
+				"properties": {
+					"description": {
+						"$ref": "#/definitions/description"
+					},
+					"metadata": {
+						"$ref": "#/definitions/metadata"
+					},
+					"inputs": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/parameter_definition"
+						}
+					},
+					"preconditions": {
+						"type": "array",
+						"items": {
+							"$ref": "#/definitions/workflow_precondition_definition"
+						}
+					},
+					"steps": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/workflow_step_definition"
+						}
+					},
+					"outputs": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/attribute_mapping"
+						}
+					}
+				},
+				"additionalProperties": false
+			}, {
+				"properties": {
+					"description": {
+						"$ref": "#/definitions/description"
+					},
+					"metadata": {
+						"$ref": "#/definitions/metadata"
+					},
+					"inputs": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/parameter_definition"
+						}
+					},
+					"preconditions": {
+						"type": "array",
+						"items": {
+							"$ref": "#/definitions/workflow_precondition_definition"
+						}
+					},
+					"implementation": {
+						"$ref": "#/definitions/operation_implementation_definition"
+					},
+					"outputs": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/attribute_mapping"
+						}
+					}
+				},
+				"additionalProperties": false
+			}]
+		},
+		"property_mapping": {
+			"anyOf": [{
+				"$ref": "#/definitions/value"
+			}, {
+				"type": "array",
+				"items": {
+					"type": "string"
+				},
+				"minItems": 1,
+				"maxItems": 1
+			}, {
+				"type": "object",
+				"oneOf": [{
+					"properties": {
+						"mapping": {
+							"type": "array",
+							"items": [{
+								"type": "string"
+							}],
+							"maxItems": 1
+						}
+					}
+				}, {
+					"properties": {
+						"value": {
+							"$ref": "#/definitions/value"
+						}
+					}
+				}],
+				"additionalProperties": false
+			}]
+		},
+		"attribute_mapping": {
+			"anyOf": [{
+				"$ref": "#/definitions/value"
+			}, {
+				"type": "array",
+				"items": {
+					"type": "string"
+				},
+				"minItems": 1,
+				"maxItems": 1
+			}, {
+				"type": "object",
+				"properties": {
+					"mapping": {
+						"type": "array",
+						"items": [{
+							"type": "string"
+						}],
+						"maxItems": 1
+					}
+				},
+				"additionalProperties": false
+			}]
+		},
+		"capability_mapping": {
+			"anyOf": [{
+				"type": "array",
+				"items": {
+					"type": "string"
+				},
+				"minitems": 2,
+				"maxItems": 2
+			}, {
+				"type": "object",
+				"oneOf": [{
+					"properties": {
+						"mapping": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							},
+							"minItems": 2,
+							"maxItems": 2
+						}
+					}
+				}, {
+					"properties": {
+						"properties": {
+							"type": "object",
+							"additionalProperties": {
+								"$ref": "#/definitions/property_assignment"
+							}
+						},
+						"attributes": {
+							"type": "object",
+							"additionalProperties": {
+								"$ref": "#/definitions/attribute_assignment"
+							}
+						}
+					}
+				}],
+				"additionalProperties": false
+			}]
+		},
+		"requirement_mapping": {
+			"anyOf": [{
+				"type": "array",
+				"items": [{
+					"type": "string"
+				}],
+				"minItems": 2,
+				"maxItems": 2
+			}, {
+				"type": "object",
+				"oneOf": [{
+					"properties": {
+						"mapping": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							},
+							"minItems": 2,
+							"maxItems": 2
+						}
+					}
+				}, {
+					"properties": {
+						"properties": {
+							"type": "object",
+							"additionalProperties": {
+								"$ref": "#/definitions/property_assignment"
+							}
+						},
+						"attributes": {
+							"type": "object",
+							"additionalProperties": {
+								"$ref": "#/definitions/attribute_assignment"
+							}
+						}
+					}
+				}],
+				"additionalProperties": false
+			}]
+		},
+		"interface_mapping": {
+			"type": "object",
+			"additionalProperties": {
+				"type": "string"
+			}
+		},
+		"substitution_mapping": {
+			"type": "object",
+			"properties": {
+				"node_type": {
+					"type": "string"
+				},
+				"substitution_filter": {
+					"$ref": "#/definitions/node_filter_definition"
+				},
+				"properties": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/property_mapping"
+					}
+				},
+				"attributes": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/attribute_mapping"
+					}
+				},
+				"capabilities": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/capability_mapping"
+					}
+				},
+				"requirements": {
+					"anyOf": [{
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/requirement_mapping"
+						}
+					}, {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"additionalProperties": {
+								"$ref": "#/definitions/requirement_mapping"
+							},
+							"maxProperties": 1
+						}
+					}]
+				},
+				"interfaces": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/interface_mapping"
+					}
+				}
+			},
+			"additionalProperties": false,
+			"required": ["node_type"]
+		},
+		"topology_template_definition": {
+			"type": "object",
+			"properties": {
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"inputs": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/parameter_definition"
+					}
+				},
+				"node_templates": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/node_template"
+					}
+				},
+				"relationship_templates": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/relationship_template"
+					}
+				},
+				"groups": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/group_definition"
+					}
+				},
+				"policies": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"additionalProperties": {
+							"$ref": "#/definitions/policy_definition"
+						}
+					}
+				},
+				"outputs": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/parameter_definition"
+					}
+				},
+				"substitution_mappings": {
+					"$ref": "#/definitions/substitution_mapping"
+				},
+				"workflows": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/imperative_workflow_definition"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"service_template_definition": {
+			"type": "object",
+			"properties": {
+				"tosca_definitions_version": {
+					"type": "string"
+				},
+				"namespace": {
+					"type": "string",
+					"format": "uri"
+				},
+				"metadata": {
+					"allOf": [{
+						"$ref": "#/definitions/metadata"
+					}, {
+						"properties": {
+							"template_name": {
+								"type": "string"
+							},
+							"template_author": {
+								"type": "string"
+							},
+							"template_version": {
+								"$ref": "#/definitions/version"
+							}
+						}
+					}]
+				},
+				"description": {
+					"$ref": "#/definitions/description"
+				},
+				"dsl_definitions": {
+					"type": "object"
+				},
+				"repositories": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/repository_definition"
+					}
+				},
+				"imports": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/import_definition"
+					}
+				},
+				"artifact_types": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/artifact_type"
+					}
+				},
+				"data_types": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/data_type"
+					}
+				},
+				"capability_types": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/capability_type"
+					}
+				},
+				"interface_types": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/interface_type"
+					}
+				},
+				"relationship_types": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/relationship_type"
+					}
+				},
+				"node_types": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/node_type"
+					}
+				},
+				"group_types": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/group_type"
+					}
+				},
+				"policy_types": {
+					"type": "object",
+					"additionalProperties": {
+						"$ref": "#/definitions/policy_type"
+					}
+				},
+				"topology_template": {
+					"$ref": "#/definitions/topology_template_definition"
+				}
+			},
+			"required": ["tosca_definitions_version"],
+			"additionalProperties": false
+		}
+	}
+}
